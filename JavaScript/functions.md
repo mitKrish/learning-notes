@@ -127,9 +127,11 @@ function getUserData(callback) {
   callback(userData);
 }
 
-getUserData((data) => {
-  console.log("User data:", data);
-});
+function printUserData(data){
+  console.log("User data:", data);  
+}
+
+getUserData(printUserData);
 ```
 ## Promises
 
