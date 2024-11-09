@@ -108,3 +108,96 @@ let obj = {
 obj.regular();
 obj.arrow();
 ```
+
+## Callback 
+A callback is a function passed into another function as an argument and is called after some operation has been completed.
+
+```
+callback(error, values)
+	if error, first parameter - error object
+	else first parameter - null & rest - return values.
+```
+
+callback hell, a situation where callbacks are nested within callbacks, making the code difficult to read and maintain.
+
+```
+const userData = { id: 1, name: "John Doe" };
+
+function getUserData(callback) {
+  callback(userData);
+}
+
+getUserData((data) => {
+  console.log("User data:", data);
+});
+```
+## Promises
+
+A promise is basically an advancement of callbacks in Node. A Promise means an action will either be completed or rejected. 
+
+Promises can be chained and provides easier error handling. So, No Callback Hell.
+
+Promise States:
+- pending: initial state, neither fulfilled nor rejected.
+- fulfilled: operation completed successfully.
+- rejected: operation failed.
+
+Advantages:
+- Chaining: Promises can be chained, improving code readability.
+- Error Handling: Promises provide a catch method to handle errors
+
+```
+const userData = { id: 1, name: "John Doe" };
+
+function getUserData(userId) {
+  return new Promise((resolve, reject) => {
+    if (userId === userData.id) {
+      resolve(userData);
+    } else {
+      reject("Invalid User Id");
+    }
+  });
+}
+
+getUserData()
+  .then((data) => {
+    console.log("User data:", data);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+```
+
+## Async-Await
+- Async functions helps in writing promises looks like synchronous. It operates asynchronously via the event-loop. It automatically wraps it in a promise which is resolved with its value.
+- Await: Await function makes the code wait until the promise returns a result. It only makes the async block wait.
+
+Advantages:
+ - Readability: Makes asynchronous code look like synchronous code, enhancing readability.
+ - Error Handling: Uses try/catch blocks for error handling
+
+```
+const userData = { id: 1, name: "John Doe" };
+
+async function getUserData(userId) {
+  if (userId === userData.id) {
+    return new Promise((resolve) => {
+      resolve(userData);
+    });
+  } else {
+    return new Error("Invalid User ID");
+  }
+}
+
+async function processUserData() {
+  try {
+    const data = await getUserData(0);
+    console.log("User data:", data);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+processUserData();
+```
+
