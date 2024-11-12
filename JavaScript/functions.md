@@ -203,3 +203,68 @@ async function processUserData() {
 processUserData();
 ```
 
+## Closure?
+A closure is a feature in JavaScript where an inner function has access to the outer (enclosing) function’s variables. In JavaScript, closures are created every time a function is created, at function creation time.
+
+- Variables declared in the outer function’s scope.
+- Parameters of the outer function.
+- Variables declared in the global scope.
+
+```
+function outer(){
+    let x =5;
+    
+    function inner(){
+        console.log(x);
+    }
+    inner();
+}
+
+outer();
+```
+
+outerFunction creates a variable outerVariable.
+innerFunction is defined inside outerFunction and accesses outerVariable.
+Even after outerFunction has finished executing, innerFunction retains access to outerVariable through the closure.
+
+
+### Practical Uses of Closures
+#### Data Privacy:
+Closures can be used to create private variables that cannot be accessed from outside the function.
+
+```
+function createCounter() {
+  let count = 0;
+
+  return function() {
+    count++;
+    return count;
+  };
+}
+
+const counter = createCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3
+```
+
+#### Function Factories:
+
+Closures can be used to create functions with preset arguments.
+```
+function createAdder(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+const addFive = createAdder(5);
+console.log(addFive(2)); // 7
+console.log(addFive(10)); // 15
+```
+Here, createAdder returns a function that adds a specific value to its argument. The returned function remembers the value of x through the closure.
+
+Key Points to Remember
+- Closures are created every time a function is created.
+- They allow inner functions to access variables from their outer scope.
+- They are useful for data privacy and creating function factories.
