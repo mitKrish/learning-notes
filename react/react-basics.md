@@ -23,5 +23,5 @@
 
 ## DOM
 - __Real DOM__: The Real DOM (Document Object Model) is the standard way browsers represent the structure of a web page. It creates a tree-like structure where each node represents an element, attribute, or piece of text in the HTML document. Changes are slow because the entire DOM is re-rendered.
-- __Virtual DOM__: An in-memory representation of the Real DOM used by libraries like React to optimize updates. Only the necessary changes are applied to the Real DOM.
-- __Shadow DOM__: A way to encapsulate a part of the DOM to create isolated and reusable components, preventing style and structure conflicts.
+- __Virtual DOM__: An in-memory representation of the Real DOM used by libraries like React to optimize updates. It is a lightweight copy of the Real DOM that exists in memory. When changes are made to the application state, the Virtual DOM updates first. React then compares the updated Virtual DOM with the previous version to identify the differences (a process called "diffing"). Only the necessary changes are then applied to the Real DOM, making updates more efficient.
+- __Shadow DOM__: A way to encapsulate a part of the DOM to create isolated and reusable components, preventing style and structure conflicts. Eg: A custom video player might use the Shadow DOM to encapsulate its controls,
