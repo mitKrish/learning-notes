@@ -1,0 +1,24 @@
+rootpwd
+
+sudo dpkg -i *.deb
+
+sudo killall mysqld
+
+sudo mysql -u root -p --default-character-set=utf8 bite_qr_app < data-dump.sql
+
+sudo systemctl start mysql
+sudo systemctl status mysql
+sudo systemctl stop mysql
+
+systemctl restart mysql
+
+sudo service mysql stop;
+sudo service mysql start;
+
+sudo killall mysqld
+
+select version();
+
+sudo dpkg-reconfigure mysql-server-9.2
+
+/etc/mysql/my.cnf
