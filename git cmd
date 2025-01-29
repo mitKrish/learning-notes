@@ -1,0 +1,5 @@
+git remote -v — Check the current remotes.
+git remote remove origin — Remove the old remote.
+git remote add origin <new-remote-url> — Add the new remote.
+git remote -v — Verify the new remote.
+git push -u origin master or git push -u origin main — Push to the new remote.
