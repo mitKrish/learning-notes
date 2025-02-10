@@ -406,7 +406,9 @@ Closures are a powerful feature in JavaScript that allows inner functions to acc
  * Syntax: function.call(thisArg, arg1, arg2, ...)
 ```
 const person = { name: "Alice" };
-function greet(greeting, punctuation) {  console.log(`${greeting}, ${this.name}${punctuation}`);}
+function greet(greeting, punctuation) {
+  console.log(`${greeting}, ${this.name}${punctuation}`);
+}
 greet.call(person, "Hello", "!"); // Output: Hello, Alice!
 ```
 #### Advantages: 
@@ -418,8 +420,11 @@ greet.call(person, "Hello", "!"); // Output: Hello, Alice!
 * Purpose: Invokes a function directly, explicitly setting the this value and providing arguments as an array.\
 * Syntax: function.apply(thisArg, [argsArray])
 ```
-const person = { name: "Bob" };const args = ["Greetings", "!!"];
-function greet(greeting, punctuation) {  console.log(`${greeting}, ${this.name}${punctuation}`);}
+const person = { name: "Bob" };
+const args = ["Greetings", "!!"];
+function greet(greeting, punctuation) {
+  console.log(`${greeting}, ${this.name}${punctuation}`);
+}
 greet.apply(person, args); // Output: Greetings, Bob!!
 ```
 * #### Advantages:
@@ -434,9 +439,13 @@ greet.apply(person, args); // Output: Greetings, Bob!!
 
 ```
 const person = { name: "Charlie" };
-function greet(greeting, punctuation) {  console.log(`${greeting}, ${this.name}${punctuation}`);}
-const greetCharlie = greet.bind(person, "Hi"); // Creates a new functiongreetCharlie("?"); // Output: Hi, Charlie? (The "Hi" is pre-filled)
-const greetCharlie2 = greet.bind(person);greetCharlie2("Hello", "!!!"); // Output: Hello, Charlie!!!
+function greet(greeting, punctuation) { 
+ console.log(`${greeting}, ${this.name}${punctuation}`);
+}
+// Creates a new functiongreetCharlie("?");
+const greetCharlie = greet.bind(person, "Hi");  // Output: Hi, Charlie? (The "Hi" is pre-filled)
+const greetCharlie2 = greet.bind(person);
+greetCharlie2("Hello", "!!!"); // Output: Hello, Charlie!!!
 ```
 * #### Advantages:
   * Event Handling: Crucial for event handlers where you need to maintain the correct this context (e.g., within a setTimeout or event listener).
@@ -446,8 +455,17 @@ const greetCharlie2 = greet.bind(person);greetCharlie2("Hello", "!!!"); // Outpu
   * Doesn't execute immediately: It creates a new function, which might be a slight overhead if you need to execute it right away (use call or apply in that case).
   * Slightly more complex: The concept of creating a new bound function might be a little harder to grasp initially compared to call and apply.
   
-    Summary Table:| Method | Invokes Function? | Arguments | this Binding | Use Cases ||---|---|---|---|---|| call() | Yes | Individually | Explicitly set | Direct invocation, fixed arguments || apply() | Yes | Array | Explicitly set | Variable arguments, array-like objects || bind() | No (creates new function) | Individually (for pre-filling) | Permanently bound | Event handling, partial application, callbacks |Which to use when? * call(): Use when you want to call a function immediately with a specific this value and a small, fixed number of arguments. * apply(): Use when you want to call a function immediately with a specific this value and you have a variable number of arguments (or they're in an array). * bind(): Use when you want to create a new function with a permanently bound this value, often for event handling, callbacks, or partial application.Understanding these three methods is essential for mastering JavaScript's function manipulation capabilities. They give you fine-grained control over the this context and argument passing, leading to more flexible and powerful code.
+### Summary Table:
+| Method | Invokes Function? | Arguments | this Binding | Use Cases |
+|---|---|---|---|---|
+| call() | Yes | Individually | Explicitly set | Direct invocation, fixed arguments |
+| apply() | Yes | Array | Explicitly set | Variable arguments, array-like objects |
+| bind() | No (creates new function) | Individually (for pre-filling) | Permanently bound | Event handling, partial application, callbacks |
 
+### Which to use when? 
+* call(): Use when you want to call a function immediately with a specific this value and a small, fixed number of arguments.
+* apply(): Use when you want to call a function immediately with a specific this value and you have a variable number of arguments (or they're in an array).
+* bind(): Use when you want to create a new function with a permanently bound this value, often for event handling, callbacks, or partial application.
 
 
 
