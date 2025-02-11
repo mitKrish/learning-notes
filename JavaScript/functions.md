@@ -109,6 +109,88 @@ obj.regular();
 obj.arrow();
 ```
 
+In JavaScript, this is a keyword that refers to the current execution context of a function and its value depends on how the function is called.
+
+#### 1. Global Scope 
+When used outside any function or object, this refers to the global object: 
+* In browsers, it's the window object. 
+* In Node.js, it's the global object. 
+```
+console.log(this); // window (in browsers)
+console.log(this); // global (in Node.js)
+```
+
+#### 2. Function Context 
+
+* Regular function call: In non-strict mode, this refers to the global object. In strict mode, it's undefined. 
+```
+function myFunction() {
+  console.log(this === window); // true (non-strict mode)
+  console.log(this === undefined); // true (strict mode)
+}
+myFunction();
+```
+* Method call: When a function is called as a method of an object, this refers to the object that called the method. 
+```
+const myObject = {
+  myMethod: function() {
+    console.log(this === myObject); // true
+  }
+};
+myObject.myMethod();
+```
+#### 3. Constructor Function 
+When a function is used as a constructor with the new keyword, this refers to the newly created object instance. 
+```
+function MyConstructor() {
+  this.myProperty = 'example';
+  console.log(this); // refers to the new object instance
+}
+const instance = new MyConstructor();
+console.log(instance.myProperty); // 'example'
+```
+
+#### 4. Event Handlers 
+In event handlers, this refers to the HTML element that triggered the event. 
+```
+<button id="myButton">Click me</button>
+document.getElementById('myButton').addEventListener('click', function() {
+  console.log(this); // refers to the button element
+});
+```
+
+#### 5. call, apply, and bind 
+These methods allow explicitly setting the value of this: 
+* call() and apply() invoke the function immediately, with call taking arguments individually and apply as an array.
+* bind() returns a new function with this bound to the specified value, without immediately calling the function. 
+```
+function myFunc(arg1, arg2) {
+  console.log(this, arg1, arg2);
+}
+
+const obj = { value: 'object' };
+
+myFunc.call(obj, 'a', 'b');   // obj, 'a', 'b'
+myFunc.apply(obj, ['a', 'b']);  // obj, 'a', 'b'
+
+const boundFunc = myFunc.bind(obj, 'a', 'b');
+boundFunc(); // obj, 'a', 'b'
+```
+
+## functions and arrow functions
+
+| Feature           | Traditional Function                                  | Arrow Function                                      |
+|-------------------|------------------------------------------------------|------------------------------------------------------|
+| Syntax            | `function functionName(params) { ... }`               | `const functionName = (params) => { ... };`           |
+| `this` Binding    | Dynamic, depends on how the function is called.       | Lexical, inherits `this` from surrounding scope.       |
+| `arguments` Object | Has `arguments` object (array-like).                 | Does not have `arguments` object. Use rest parameters. |
+| Constructor       | Can be used as a constructor with `new`.            | Cannot be used as a constructor.                   |
+| Hoisting          | Function declarations are hoisted.                      | Function expressions (including arrow functions) are not hoisted. |
+| Return Value      | Explicit `return` statement or implicit return (single-expression functions). | Explicit `return` or implicit return (single-expression functions). |
+| Scope             | Creates its own scope for variables declared with `var`. | Inherits scope from the surrounding context. Block-scoped variables (`let`, `const`) behave the same way in both. |
+| Use Cases         | Object methods, event handlers (where `this` is dynamic), constructor functions, functions needing `arguments`. | Short, concise functions, callbacks, event handlers where lexical `this` is desired. |
+
+
 ## Callback 
 A callback is a function passed into another function as an argument and is called after some operation has been completed.
 
