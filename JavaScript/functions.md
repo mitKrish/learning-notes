@@ -132,12 +132,18 @@ myFunction();
 ```
 * Method call: When a function is called as a method of an object, this refers to the object that called the method. 
 ```
-const myObject = {
-  myMethod: function() {
-    console.log(this === myObject); // true
-  }
-};
-myObject.myMethod();
+const obj = {
+    name:"krishna",
+    getName:function(){
+        console.log(this.name);  
+    },
+    getArrowName : ()=>{
+        console.log(this.name);
+    }
+}
+
+obj.getName(); // "Krishna" this refers to obj which called the method.
+obj.getArrowName(); //undefined
 ```
 #### 3. Constructor Function 
 When a function is used as a constructor with the new keyword, this refers to the newly created object instance. 
@@ -164,17 +170,18 @@ These methods allow explicitly setting the value of this:
 * call() and apply() invoke the function immediately, with call taking arguments individually and apply as an array.
 * bind() returns a new function with this bound to the specified value, without immediately calling the function. 
 ```
-function myFunc(arg1, arg2) {
-  console.log(this, arg1, arg2);
+function sample(a,b){
+    console.log(this, a,b);
 }
 
-const obj = { value: 'object' };
+let obj = {z:100};
 
-myFunc.call(obj, 'a', 'b');   // obj, 'a', 'b'
-myFunc.apply(obj, ['a', 'b']);  // obj, 'a', 'b'
+sample.call(obj, 10,20);    // { z: 100 } 10 20
+sample.apply(obj,[10,20]);  // { z: 100 } 10 20
 
-const boundFunc = myFunc.bind(obj, 'a', 'b');
-boundFunc(); // obj, 'a', 'b'
+const bindFunc = sample.bind(obj, 10,20);
+bindFunc();                 // { z: 100 } 10 20
+
 ```
 
 ## functions and arrow functions
