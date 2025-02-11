@@ -184,6 +184,9 @@ bindFunc();                 // { z: 100 } 10 20
 
 ```
 
+Links: 
+* https://codeburst.io/the-simple-rules-to-this-in-javascript-35d97f31bde3
+
 ## functions and arrow functions
 
 | Feature           | Traditional Function                                  | Arrow Function                                      |
