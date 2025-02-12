@@ -326,6 +326,9 @@ processUserData();
 | Chaining        | Difficult                                | Easy                                       | Easy                                      |
 | Under the Hood | Basic asynchronous mechanism            | Built on callbacks, more structured       | Built on Promises, syntactic sugar       |
 
+## Promise Methods:
+
+
 ## Closure
 A closure is a feature in JavaScript where an inner function has access to the outer (enclosing) function’s variables. In JavaScript, closures are created every time a function is created, at function creation time.
 
