@@ -326,6 +326,23 @@ processUserData();
 | Chaining        | Difficult                                | Easy                                       | Easy                                      |
 | Under the Hood | Basic asynchronous mechanism            | Built on callbacks, more structured       | Built on Promises, syntactic sugar       |
 
+**Advantages & Disadvantages:**
+
+| Feature       | Callbacks                                      | Promises                                       | Async/Await                                    |
+|---------------|------------------------------------------------|------------------------------------------------|------------------------------------------------|
+| **Advantages**|  Simple to use for small tasks                |  Avoids callback hell                         |  Syntactic sugar over promises                |
+|               |  Widely supported                             |  Better error handling with `.catch()`        |  Code looks synchronous, easier to read       |
+|               |  No need for additional libraries             |  Chaining for sequential async operations     |  Easier to debug with modern tools            |
+|               |                                                |  More control over async flow                |  Reduces boilerplate code                     |
+| **Disadvantages**|  Can lead to callback hell (nested callbacks)| - Can be verbose with `.then()` and `.catch()` |  Requires modern JavaScript (ES8)             |
+|               |  Harder to read and maintain                  |  Still requires chaining for sequential tasks |  Needs `try/catch` for error handling         |
+|               |  Error handling can be cumbersome             |  Slightly more complex than callbacks         |  Not supported in older environments          |
+
+### Summary
+- **Callbacks** are simple but can become unwieldy with complex asynchronous operations.
+- **Promises** provide a cleaner way to handle asynchronous operations and avoid callback hell.
+- **Async/Await** makes asynchronous code look synchronous, improving readability and maintainability.
+
 ## Promise Methods:
 
 ```javascript
