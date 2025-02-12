@@ -328,136 +328,6 @@ processUserData();
 
 ## Promise Methods:
 
-Let's explore JavaScript Promises and their associated methods in detail.
-
-**What is a Promise?**
-
-A Promise is an object that represents the eventual result of an asynchronous operation.  It can be in one of three states:
-
-*   **Pending:** The initial state; the operation hasn't completed yet.
-*   **Fulfilled (Resolved):** The operation completed successfully.
-*   **Rejected:** The operation failed.
-
-**Promise Methods**
-
-Here's a breakdown of key Promise methods:
-
-1.  **`new Promise()` Constructor:**
-
-    This is how you create a new Promise.  It takes a function called the "executor" as an argument. The executor function receives two arguments: `resolve` and `reject`.
-
-    ```javascript
-    const myPromise = new Promise((resolve, reject) => {
-      // Asynchronous operation (e.g., fetching data)
-      setTimeout(() => {
-        const success = true; // Or false, depending on the outcome
-
-        if (success) {
-          resolve("Data fetched successfully!"); // Resolve with the result
-        } else {
-          reject("Error fetching data!"); // Reject with the error
-        }
-      }, 1000); // Simulate a 1-second delay
-    });
-    ```
-
-2.  **`.then()` Method:**
-
-    The `.then()` method is used to handle the fulfilled state of a Promise. It takes up to two arguments:
-
-    *   A function to handle the resolved value.
-    *   (Optional) A function to handle the rejected value (you can also use `.catch()` for this).
-
-    ```javascript
-    myPromise.then(
-      (result) => {
-        console.log("Success:", result); // "Data fetched successfully!"
-      },
-      (error) => {
-        console.error("Error:", error);
-      }
-    );
-    ```
-
-3.  **`.catch()` Method:**
-
-    The `.catch()` method is specifically designed to handle the rejected state of a Promise.  It's equivalent to providing the second argument to `.then()`.  It's generally preferred for cleaner error handling.
-
-    ```javascript
-    myPromise
-      .then((result) => {
-        console.log("Success:", result);
-      })
-      .catch((error) => {
-        console.error("Error:", error); // "Error fetching data!" (if rejected)
-      });
-    ```
-
-4.  **`.finally()` Method:**
-
-    The `.finally()` method is executed regardless of whether the Promise is fulfilled or rejected.  It's useful for cleanup tasks (e.g., closing connections, stopping loaders).
-
-    ```javascript
-    myPromise
-      .then((result) => { /* ... */ })
-      .catch((error) => { /* ... */ })
-      .finally(() => {
-        console.log("Promise finished."); // Always executes
-      });
-    ```
-
-5.  **`Promise.all()` Method:**
-
-    `Promise.all()` takes an array of Promises and returns a single Promise that resolves when *all* of the input Promises resolve.  If any of the Promises reject, the resulting Promise immediately rejects with the reason of the first rejected Promise.
-
-    ```javascript
-    const promise1 = Promise.resolve(1);
-    const promise2 = new Promise((resolve) => setTimeout(resolve, 100, "foo"));
-    const promise3 = Promise.resolve(true);
-
-    Promise.all([promise1, promise2, promise3])
-      .then((values) => {
-        console.log(values); // [1, "foo", true]
-      })
-      .catch((error) => {
-        console.error("A promise rejected:", error);
-      });
-    ```
-
-6.  **`Promise.race()` Method:**
-
-    `Promise.race()` takes an array of Promises and returns a single Promise that resolves or rejects as soon as *one* of the input Promises resolves or rejects.  It's like a race—the first one to finish wins.
-
-    ```javascript
-    const promiseA = new Promise((resolve) => setTimeout(resolve, 500, "A"));
-    const promiseB = new Promise((resolve) => setTimeout(resolve, 100, "B"));
-
-    Promise.race([promiseA, promiseB])
-      .then((value) => {
-        console.log(value); // "B" (because promiseB resolves first)
-      });
-    ```
-
-7.  **`Promise.resolve()` Method:**
-
-    `Promise.resolve(value)` creates a Promise that is already resolved with the given `value`.  It's a shorthand for `new Promise(resolve => resolve(value))`.
-
-    ```javascript
-    const resolvedPromise = Promise.resolve(42);
-    resolvedPromise.then(value => console.log(value)); // 42
-    ```
-
-8.  **`Promise.reject()` Method:**
-
-    `Promise.reject(reason)` creates a Promise that is already rejected with the given `reason`. It's a shorthand for `new Promise((resolve, reject) => reject(reason))`.
-
-    ```javascript
-    const rejectedPromise = Promise.reject("Something went wrong");
-    rejectedPromise.catch(reason => console.error(reason)); // "Something went wrong"
-    ```
-
-**Example combining several concepts:**
-
 ```javascript
 function fetchData() {
   return new Promise((resolve, reject) => {
@@ -488,7 +358,97 @@ fetchData()
   });
 ```
 
-This comprehensive explanation should give you a solid understanding of Promise methods in JavaScript. Remember to practice using them to solidify your knowledge!
+
+1.  **`new Promise()` Constructor:**
+
+    It takes a function called the "executor" as an argument. The executor function receives two arguments: `resolve` and `reject`.
+    
+2.  **`.then()` Method:**
+
+    The `.then()` method is used to handle the fulfilled state of a Promise. It takes up to two arguments:
+
+    *   A function to handle the resolved value.
+    *   (Optional) A function to handle the rejected value (you can also use `.catch()` for this).
+
+3.  **`.catch()` Method:**
+
+    The `.catch()` method is specifically designed to handle the rejected state of a Promise. 
+
+4.  **`.finally()` Method:**
+
+    The `.finally()` method is executed regardless of whether the Promise is fulfilled or rejected.  It's useful for cleanup tasks (e.g., closing connections, stopping loaders).
+
+5.  **`Promise.all()` Method:**
+
+    * `Promise.all()` takes an array of Promises and returns a single Promise that resolves when *all* of the input Promises resolve.
+    *  If any of the Promises reject, the resulting Promise immediately rejects with the reason of the first rejected Promise.
+
+    ```javascript
+    const promise1 = Promise.resolve(1);
+    const promise2 = new Promise((resolve) => setTimeout(resolve, 100, "foo"));
+    const promise3 = Promise.resolve(true);
+
+    Promise.all([promise1, promise2, promise3])
+      .then((values) => {
+        console.log(values); // [1, "foo", true]
+      })
+      .catch((error) => {
+        console.error("A promise rejected:", error);
+      });
+    ```
+6. **`Promise.allSettled()` Method:**
+ * Always resolves with an array of objects describing the outcome of each promise, regardless of whether they resolved or rejected.
+	```javascript
+	const promise1 = Promise.resolve(3);
+	const promise2 = Promise.reject('error');
+	const promise3 = new Promise((resolve, reject) => {
+	  setTimeout(resolve, 100, 'foo');
+	});
+	
+	Promise.allSettled([promise1, promise2, promise3]).then(results => {
+	 Each((result) => {
+	    if (result.status === 'fulfilled') {
+	      console.log('Fulfilled:', result.value);
+	    } else {
+	      console.log('Rejected:', result.reason);
+	    }
+	  });
+	});
+	```
+
+* Use Promise.all when you need all promises to succeed.
+* Use Promise.allSettled when you need to handle each promise's outcome individually.
+
+7.  **`Promise.race()` Method:**
+
+    `Promise.race()` takes an array of Promises and returns a single Promise that resolves or rejects as soon as *one* of the input Promises resolves or rejects.  
+
+    ```javascript
+    const promiseA = new Promise((resolve) => setTimeout(resolve, 500, "A"));
+    const promiseB = new Promise((resolve) => setTimeout(resolve, 100, "B"));
+
+    Promise.race([promiseA, promiseB])
+      .then((value) => {
+        console.log(value); // "B" (because promiseB resolves first)
+      });
+    ```
+
+9.  **`Promise.resolve()` Method:**
+    * `Promise.resolve(value)` creates a Promise that is already resolved with the given `value`.
+    * Shorthand for `new Promise(resolve => resolve(value))`.
+    ```javascript
+    const resolvedPromise = Promise.resolve(42);
+    resolvedPromise.then(value => console.log(value)); // 42
+    ```
+
+10.  **`Promise.reject()` Method:**
+    * `Promise.reject(reason)` creates a Promise that is already rejected with the given `reason`.
+    * Shorthand for `new Promise((resolve, reject) => reject(reason))`.
+
+    ```javascript
+    const rejectedPromise = Promise.reject("Something went wrong");
+    rejectedPromise.catch(reason => console.error(reason)); // "Something went wrong"
+    ```
 
 ## Closure
 A closure is a feature in JavaScript where an inner function has access to the outer (enclosing) function’s variables. In JavaScript, closures are created every time a function is created, at function creation time.
