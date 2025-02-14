@@ -155,17 +155,19 @@ fs.readFile(".prettierc.json", () => {
 ```
 **process.nextTick()**
 
-process.nextTick() will be processed after the current operation is completed, regardless of current phase of the event loop.
-Operation is defined as a transition from the underlying C/C++ handler, and handling the JavaScript that needs to be executed.
-
-* process.nextTick() fires immediately on the same phase
-* setImmediate() fires on the following iteration or 'tick' of the event loop
+* process.nextTick() will be processed after the current operation is completed, regardless of current phase of the event loop.
+* Operation is defined as a transition from the underlying C/C++ handler, and handling the JavaScript that needs to be executed.
+* It schedules a callback function to be executed immediately after the current operation completes, but before the event loop proceeds to the next phase.
 
 **Why use process.nextTick()?**
 
 * Allow users to handle errors, cleanup unneeded resources, or try the request again before the event loop continues.
 * At times to allow a callback to run after the call stack has unwound but before the event loop continues.
 
+**process.nextTick() vs setImmediate()**
+* process.nextTick() fires immediately on the same phase
+* setImmediate() fires on the following iteration or 'tick' of the event loop
+  
 ```javascript
 setImmediate(() => {
   console.log("immediate")
