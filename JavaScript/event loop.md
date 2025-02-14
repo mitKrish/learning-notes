@@ -1,7 +1,7 @@
 
 **What is the Event Loop (in Node.js)?**
 
-Node.js is a single-threaded JavaScript runtime.  To handle asynchronous operations efficiently without blocking the single thread, it uses an event loop.
+Node.js is a single-threaded JavaScript runtime. The event loop allows Node.js to perform non-blocking I/O operations by offloading operations to the system kernel whenever possible.Modern kernels are multi-threaded and handle multiple operations executing in the background. When one of these operations completes, the kernel sends appropriate callback to the poll queue.
 
 **Key Concepts from the Node.js Website:**
 1.  **Single Thread:** Node.js runs on a single thread.  This means only one piece of code can be executed at a time.
@@ -9,9 +9,6 @@ Node.js is a single-threaded JavaScript runtime.  To handle asynchronous operati
 3.  **Event Loop:** The event loop continuously monitors the call stack and the callback queue.  When the call stack is empty, the event loop takes the first callback from the queue and puts it onto the call stack for execution.
 
 **Phases of the Event Loop (Detailed):**
-
-Node.js Event Loop order:
- The Node.js event loop generally follows this order (simplified):
 1. **Timers Phase:** `setTimeout()` and `setInterval()` callbacks with expired timers executed.
 2. **Pending I/O Callbacks Phase:** Callbacks from some system operations. Eg: TCP Errors(ECONNREFUSED)
 3. **Idle, Prepare Phase:** Internal Node.js usage for housekeeping.
@@ -128,3 +125,81 @@ File content: Hello, this is a test file.
 *   The event loop allows Node.js to handle many asynchronous operations concurrently on a single thread.
 *   The phases of the event loop define the order in which different types of callbacks are executed.
 *   `process.nextTick()` and Promises' microtask queue provide a way to schedule code to run immediately after the current operation, but before the event loop continues.
+
+**setTimeout() vs setImmediate()**
+
+In main module, the order of execution is non-deterministic, as it is bound by the performance of the process
+
+```javascript
+setTimeout(() => {
+  console.log("timeout")
+}, 0)
+
+setImmediate(() => {
+  console.log("immediate")
+})
+```
+
+Within an I/O cycle, the immediate callback is always executed first.
+
+```javascript
+const fs = require("fs")
+fs.readFile(".prettierc.json", () => {
+  setTimeout(() => {
+    console.log("timeout")
+  }, 0)
+  setImmediate(() => {
+    console.log("immediate")
+  })
+})
+```
+**process.nextTick()**
+
+process.nextTick() will be processed after the current operation is completed, regardless of current phase of the event loop.
+Operation is defined as a transition from the underlying C/C++ handler, and handling the JavaScript that needs to be executed.
+
+* process.nextTick() fires immediately on the same phase
+* setImmediate() fires on the following iteration or 'tick' of the event loop
+
+**Why use process.nextTick()?**
+
+* Allow users to handle errors, cleanup unneeded resources, or try the request again before the event loop continues.
+* At times to allow a callback to run after the call stack has unwound but before the event loop continues.
+
+```javascript
+setImmediate(() => {
+  console.log("immediate")
+})
+console.log("console")
+process.nextTick(() => {
+  console.log("process tick")
+})
+
+/*
+process tick
+immediate
+*/
+```
+
+* process.nextTick() -> execute code immediately on the same phase
+* setImmediate() -> execute code at the end of the current event loop cycle.
+* setTimeout()-> execute after a designated amount of milliseconds.
+* setInterval() -> execute multiple times
+
+```javascript
+const timeoutObj = setTimeout(() => {
+  console.log("timeout beyond time")
+}, 1500)
+
+const immediateObj = setImmediate(() => {
+  console.log("immediately executing immediate")
+})
+
+const intervalObj = setInterval(() => {
+  console.log("interviewing the interval")
+}, 500)
+
+clearTimeout(timeoutObj)
+clearImmediate(immediateObj)
+clearInterval(intervalObj)
+```
