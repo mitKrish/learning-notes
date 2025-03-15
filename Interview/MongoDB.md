@@ -1,1 +1,9 @@
-Shreading
+- Indexing
+- Transactions
+- Sharding
+- Aggregation Pipeline
+- Insert 1 million records
+- Fetch 1 million records
+- Optimize performance
+- GridFs
+- Capped Collection
