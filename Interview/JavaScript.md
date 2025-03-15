@@ -1,16 +1,23 @@
-Hoisting
-does let & const hoisted?
-do functions hoisted?
 
-temporal dead zone
-
-closures
-disadvantages of closures.
-
-call, bind, apply
-
-web api - setTimeout()
-
-function & arrow function
-
-rest operator, spread operator
+- Hoisting
+  - does let & const hoisted?
+  - do functions hoisted?
+  - var vs let hoisting 
+- Arrow functions
+- this keyword
+- call, bind, apply
+- Closures
+  - advantages & disadvantages.
+  - practical uses
+- callbacks, promises and async-await
+- rest params and spread operator
+- object prototypes
+- object destructuring
+- WeakMap and WeakSet
+- Memoization
+- temporal dead zone
+- dynamic typed language
+- Functions
+    - higher order functions
+    - IIFE
+- currying
