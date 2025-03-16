@@ -60,4 +60,3 @@ Let's say you have a collection of user data with fields like `userId`, `name`, 
 * When querying users, use projection to retrieve only the necessary fields: `db.users.find({ city: "New York" }, { name: 1, age: 1 })`.
 * If you need to get the count of users in a city, use `db.users.countDocuments({city: "New York"})`, this is much more efficient than retreiving all documents and counting them in your application.
 
-By applying these optimization techniques, you can significantly improve the performance of your MongoDB queries and handle large datasets efficiently.
