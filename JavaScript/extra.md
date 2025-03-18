@@ -357,7 +357,18 @@ By following these guidelines, you can design robust, scalable, and maintainable
 **5. Rate Limiting:**
 
 * **Prevent Abuse:**  Limit the number of requests that a client can make within a given time frame.  This helps prevent denial-of-service (DoS) attacks and abuse.
-* **Implement Rate Limiting:** Use libraries or API gateways to implement rate limiting.
+* **Implement Rate Limiting:** Use libraries or API gateways to implement rate limiting. Eg: express-rate-limit
+```js
+import { rateLimit } from 'express-rate-limit'
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+})
+
+// Apply the rate limiting middleware to all requests.
+app.use(limiter)
+```
 
 **6. Error Handling:**
 
@@ -388,7 +399,7 @@ By following these guidelines, you can design robust, scalable, and maintainable
 
 **12. Logging and Monitoring:**
 
-* **Track API Activity:** Log all API requests and responses to monitor for suspicious activity.
+* **Track API Activity:** Log all API requests and responses to monitor for suspicious activity. Eg:Logging( Winston, Morgan), Monitoring (Prometheus), Monitor Metrics( Grafana).
 * **Set Up Alerts:** Set up alerts for unusual patterns or suspicious requests.
 
 **13. Input Validation on the Server-Side:**
