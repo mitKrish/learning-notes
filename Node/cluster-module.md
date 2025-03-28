@@ -1,3 +1,5 @@
+## Cluster Module
+
 The Node.js `cluster` module allows you to create child processes (workers) that share server ports. This is particularly useful for taking advantage of multi-core processors.  Instead of a single Node.js process handling all incoming requests, you can distribute the load across multiple worker processes, improving performance and resilience.
 
 Here's a breakdown of the `cluster` module:
@@ -70,7 +72,7 @@ if (cluster.isMaster) {
 
 * **Sticky Sessions:**  By default, the master process distributes requests to workers in a round-robin fashion. If your application relies on sticky sessions (where a user's requests are always handled by the same worker), you'll need to use a load balancer or a session store.
 
-
+## Streams
 
 ```javascript
 const fs = require('fs');
@@ -185,10 +187,7 @@ This example demonstrates the fundamental concepts of streaming in Node.js.  You
 **In summary:** The `cluster` module is a powerful tool for improving the performance and resilience of Node.js applications by utilizing multiple CPU cores. However, it's essential to understand the implications of using multiple processes and manage state and sessions appropriately.
 
 
-
-
-
-Let's illustrate the SOLID principles with JavaScript examples.  JavaScript's dynamic nature makes some of these principles slightly different to apply than in statically typed languages like Java or C++, but the core ideas remain relevant.
+## SOLID Principles
 
 **1. Single Responsibility Principle (SRP):**
 
