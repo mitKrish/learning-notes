@@ -72,6 +72,9 @@ if (cluster.isMaster) {
 
 * **Sticky Sessions:**  By default, the master process distributes requests to workers in a round-robin fashion. If your application relies on sticky sessions (where a user's requests are always handled by the same worker), you'll need to use a load balancer or a session store.
 
+
+**In summary:** The `cluster` module is a powerful tool for improving the performance and resilience of Node.js applications by utilizing multiple CPU cores. However, it's essential to understand the implications of using multiple processes and manage state and sessions appropriately.
+
 ## Streams
 
 ```javascript
@@ -184,7 +187,6 @@ This example demonstrates the fundamental concepts of streaming in Node.js.  You
 
 * **Complexity:** Using the `cluster` module adds some complexity to your application. You need to manage worker processes and handle communication between them.
 
-**In summary:** The `cluster` module is a powerful tool for improving the performance and resilience of Node.js applications by utilizing multiple CPU cores. However, it's essential to understand the implications of using multiple processes and manage state and sessions appropriately.
 
 
 ## SOLID Principles
