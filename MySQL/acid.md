@@ -1,3 +1,5 @@
+## ACID 
+
 ACID properties are a set of principles that guarantee reliable transaction processing in database systems. They ensure that transactions are processed accurately and consistently, even in the face of errors or failures. Let's break down each property:
 
 **1. Atomicity (A):**
@@ -31,3 +33,71 @@ ACID properties are a set of principles that guarantee reliable transaction proc
 * ACID properties are essential for ensuring the reliability and integrity of database transactions, especially in applications that handle critical data, such as financial systems, e-commerce platforms, and healthcare applications.
 * They provide a framework for managing concurrent access to data and preventing data corruption.
 * They simplify application development by relieving developers from the burden of implementing complex error-handling and recovery mechanisms.
+
+```sql
+-- Create a table for bank accounts
+CREATE TABLE accounts (
+    account_id INT PRIMARY KEY,
+    balance DECIMAL(10, 2) NOT NULL
+);
+
+-- Insert some sample accounts
+INSERT INTO accounts (account_id, balance) VALUES
+(1, 1000.00),
+(2, 500.00);
+
+-- Start a transaction to transfer funds
+START TRANSACTION;
+
+-- Atomicity: Debit from account 1
+UPDATE accounts SET balance = balance - 200.00 WHERE account_id = 1;
+
+-- Atomicity: Credit to account 2
+UPDATE accounts SET balance = balance + 200.00 WHERE account_id = 2;
+
+-- Consistency: Check if balances are valid (e.g., non-negative)
+-- This is a simple check, real-world consistency checks are more complex.
+-- If the balance of account one is less than zero, the transaction will rollback.
+SELECT balance FROM accounts WHERE account_id = 1;
+
+-- Example of a check, if the balance is less than zero, the transaction will be rolled back.
+-- if (balance of account one) < 0 then ROLLBACK;
+
+-- Commit the transaction (if everything is OK)
+COMMIT;
+
+-- Or, rollback the transaction (if something went wrong)
+-- ROLLBACK;
+
+-- Isolation: If another transaction tries to update the same accounts, it will wait
+-- until this transaction is committed or rolled back.
+-- The isolation level will determine the behavior of concurrent transactions.
+-- The default isolation level is usually REPEATABLE READ.
+-- Durability: Once committed, the changes are permanent.
+-- You can check the account balances after the transaction:
+
+SELECT * FROM accounts;
+```
+
+**Explanation and ACID Properties:**
+
+1.  **Atomicity (A):**
+    * `START TRANSACTION` begins a transaction.
+    * The two `UPDATE` statements are treated as a single unit.
+    * If either `UPDATE` fails, or if a `ROLLBACK` is issued, neither update will be applied.
+    * `COMMIT` applies both updates, or `ROLLBACK` undoes both.
+
+2.  **Consistency (C):**
+    * The database moves from one valid state (balances before transfer) to another valid state (balances after transfer).
+    * The example includes a check to ensure that the balance of account 1 is not negative. In a real application, you would add more complex constraints and checks.
+    * If a constraint is violated, the transaction is rolled back, preventing an inconsistent state.
+
+3.  **Isolation (I):**
+    * MySQL's default isolation level (REPEATABLE READ) ensures that concurrent transactions don't interfere with each other.
+    * If another transaction tries to update the same accounts while this transaction is running, it will wait until this transaction is committed or rolled back.
+    * This prevents issues like lost updates or dirty reads.
+
+4.  **Durability (D):**
+    * Once `COMMIT` is executed, the changes are permanently stored in the database's transaction log and data files.
+    * Even if the server crashes, the changes will be recovered when the database restarts.
+    * MySQL uses write-ahead logging (WAL) to ensure durability.
