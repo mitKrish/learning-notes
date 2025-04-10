@@ -88,47 +88,33 @@ Software entities should be open for extension, but closed for modification. You
 ### **3. Liskov Substitution Principle (LSP)**
 Subtypes must be substitutable for their base types without altering program correctness. Derived classes should be able to replace their base classes without unexpected behavior.
 
-**Violation:**
+**Violation (Ostrich Problem):**
 
-  ```javascript
-  function setRectangleDimensions(rect, width, height) {
-    rect.width = width;
-    rect.height = height;
-  }
+```javascript
+function makeFly(animal) {
+  animal.fly(); // Assumes all animals passed have a fly method
+}
 
-  function calculateArea(rect) {
-    return rect.width * rect.height;
-  }
+const bird = { fly: () => console.log("Flying!") };
+const ostrich = { fly: () => console.log("Cannot fly!") }; // Misleading
 
-  const rectangle = { width: 0, height: 0 };
-  const square = { side: 0 }; // Square is not a rectangle
+makeFly(bird);    // Output: Flying!
+makeFly(ostrich); // Output: Cannot fly! (Behavior altered)
+```
 
-  setRectangleDimensions(rectangle, 5, 4);
-  console.log(calculateArea(rectangle)); // 20
+**Solution (Separate Behaviors):**
 
-  setRectangleDimensions(square, 5, 4); // square now has width and height, that are not correct.
-  console.log(calculateArea(square)); // 20, unexpected
-  ```
+```javascript
+function attemptFly(flyer) {
+  if (flyer.canFly) flyer.fly();
+}
 
-**Solution:**
+const flyingBird = { canFly: true, fly: () => console.log("Flying!") };
+const ostrichCorrect = { canFly: false };
 
-  ```javascript
-  function rectangleArea(rect) {
-    return rect.width * rect.height;
-  }
-
-  function squareArea(square) {
-    return square.side * square.side;
-  }
-
-  const rectangle = { width: 5, height: 4 };
-  const square = { side: 4 };
-
-  console.log(rectangleArea(rectangle));
-  console.log(squareArea(square));
-  ```
-
-  * Separate functions for rectangle and square area calculations.
+attemptFly(flyingBird);    // Output: Flying!
+attemptFly(ostrichCorrect); // No output, correct behavior
+```
 
 ### **4. Interface Segregation Principle (ISP)**
  
