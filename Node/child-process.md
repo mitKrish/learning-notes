@@ -99,3 +99,25 @@ Essentially:
 * If you need to run external programs or completely isolate tasks, use `child_process`.
 * If you're building a network server and want to utilize multiple CPU cores, use the `cluster` module.
 * If you have heavy javascript calculations, and want to use threads, use worker threads.
+
+## Child Process vs. Worker Threads vs. Cluster Module in Node.js
+
+| Feature             | Child Process                       | Worker Threads                      | Cluster Module                       |
+|----------------------|--------------------------------------|--------------------------------------|---------------------------------------|
+| **Environment** | Separate Node.js process with its own V8 instance and memory. | Single Node.js process sharing the same V8 instance but with isolated memory for each thread. | Multiple Node.js processes (usually one per CPU core) sharing the same server port. |
+| **Resource Overhead**| Higher (full process creation)      | Lower (threads within a process)     | Medium (spawns multiple processes)    |
+| **Isolation** | High (process-level)                 | Medium (thread-level memory isolation) | High (process-level)                  |
+| **Communication** | Inter-Process Communication (IPC) - serialization/deserialization required for data sharing. | Message passing via `postMessage` - automatic serialization/deserialization of many data types. Shared memory (`SharedArrayBuffer`) with careful synchronization. | IPC between the master process and worker processes. Can leverage OS-level load balancing. |
+| **Shared Memory** | Requires explicit mechanisms (e.g., shared files, message queues). | Possible with `SharedArrayBuffer` (requires careful synchronization). | Not directly shared between worker processes (each is a separate process). |
+| **Use Cases** | Running external programs, tasks with potential resource conflicts, isolating failures. | CPU-bound tasks within a single Node.js application to avoid blocking the event loop. | Scaling Node.js applications across multiple CPU cores to handle more concurrent requests (primarily for network-bound tasks). |
+| **Complexity** | Moderate to High (managing separate processes and IPC). | Moderate (managing message passing and potential shared memory synchronization). | Relatively straightforward for basic use (load balancing). More complex for advanced inter-process communication. |
+| **Failure Domain** | Failure of one child process does not necessarily affect others or the main process. | Failure in a worker thread can potentially crash the entire Node.js process if not handled carefully. | Failure of one worker process can be handled by the master process (automatic restarts). |
+| **Scalability** | Good for distributing diverse tasks. | Excellent for parallelizing CPU-bound work within a single application instance. | Excellent for scaling network handling across multiple cores. |
+| **Memory Sharing** | Not by default. Requires explicit IPC mechanisms. | Isolated per thread (except for `SharedArrayBuffer`). | Not directly shared between processes. |
+| **Event Loop** | Each child process has its own event loop. | All worker threads share the same main event loop but have their own event loops for worker code execution. | Each worker process has its own independent event loop. |
+
+**In Summary:**
+
+* Use **Child Processes** when you need strong isolation, to run external programs, or when tasks might have conflicting dependencies.
+* Use **Worker Threads** for performing CPU-intensive JavaScript tasks in parallel within a single Node.js process to avoid blocking the main event loop and improve responsiveness.
+* Use the **Cluster Module** to scale your Node.js application to utilize all available CPU cores on a machine, primarily for handling network traffic and distributing the load across multiple processes.
