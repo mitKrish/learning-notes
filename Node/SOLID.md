@@ -140,25 +140,25 @@ attemptFly(ostrichCorrect); // No output, correct behavior
 
 **Solution:**
 
-    ```javascript
-    function printDocument(printer, document) {
-      printer.print(document);
-    }
+  ```javascript
+  function printDocument(printer, document) {
+    printer.print(document);
+  }
 
-    function scanDocument(scanner, document) {
-      scanner.scan(document);
-    }
+  function scanDocument(scanner, document) {
+    scanner.scan(document);
+  }
 
-    function faxDocument(faxer, document) {
-      faxer.fax(document);
-    }
+  function faxDocument(faxer, document) {
+    faxer.fax(document);
+  }
 
-    const simplePrinter = {
-      print: (doc) => console.log(`Printing: ${doc}`),
-    };
+  const simplePrinter = {
+    print: (doc) => console.log(`Printing: ${doc}`),
+  };
 
-    printDocument(simplePrinter, "Document.txt");
-    ```
+  printDocument(simplePrinter, "Document.txt");
+  ```
 
     * Separate functions for each operation.
 
