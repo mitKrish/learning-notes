@@ -138,7 +138,7 @@ attemptFly(ostrichCorrect); // No output, correct behavior
   processDevice(simplePrinter, "Document.txt");
   ```
 
-* **Solution:**
+**Solution:**
 
     ```javascript
     function printDocument(printer, document) {
