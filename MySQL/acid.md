@@ -100,4 +100,7 @@ SELECT * FROM accounts;
 4.  **Durability (D):**
     * Once `COMMIT` is executed, the changes are permanently stored in the database's transaction log and data files.
     * Even if the server crashes, the changes will be recovered when the database restarts.
+
+
+DROP and TRUNCATE are DDL command while DELETE is a DML command. DELETE remove the specific row based on the given condition, TRUNCATE removes all the record from the table at once, whereas the DROP command removes the table or databases and as well as the structure.
     * MySQL uses write-ahead logging (WAL) to ensure durability.
