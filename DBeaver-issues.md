@@ -5,3 +5,5 @@ For DBeaver users:
 * On the "Connection settings" screen (main screen), click on "Edit Driver Settings"
 * Click on "Driver properties"
 * Set these two properties: "allowPublicKeyRetrieval" to true and "useSSL" to false
+
+https://devhints.io/knex
