@@ -84,81 +84,64 @@ function Child(props) {
 ## Context
 
 ```javascript
-import React, { createContext, useState, useContext } from 'react';
+import { useContext, createContext, useState } from "react";
 
-// 1. Create the Context
 const ThemeContext = createContext();
 
-// 2. Create the Theme Provider Component
-export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light'); // Initial theme is light
+function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState("light");
 
-  // Define the theme styles
   const themes = {
     light: {
-      backgroundColor: 'white',
-      color: 'black',
+      "background-color": "white",
+      color: "black",
     },
     dark: {
-      backgroundColor: 'black',
-      color: 'white',
+      "background-color": "black",
+      color: "white",
     },
   };
 
-  // Function to toggle the theme
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
+  function toggleTheme() {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  }
 
   return (
     <ThemeContext.Provider value={{ theme, themes, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
-};
+}
 
-// 3. Create a Custom Hook to Use the Context
-export const useTheme = () => {
-  return useContext(ThemeContext);
-};
-
-// Example Usage in a Component
-const MyThemedComponent = () => {
-  const { theme, themes } = useTheme();
+function ChildComponent() {
+  const { theme, themes, toggleTheme } = useContext(ThemeContext);
   const currentTheme = themes[theme];
 
   return (
-    <div style={{ backgroundColor: currentTheme.backgroundColor, color: currentTheme.color, padding: '20px' }}>
-      This text is themed!
-    </div>
-  );
-};
-
-// Example Usage of the Toggle Button
-const ThemeToggleButton = () => {
-  const { toggleTheme, theme } = useTheme();
-
-  return (
-    <button onClick={toggleTheme}>
-      Switch to {theme === 'light' ? 'Dark' : 'Light'} Theme
-    </button>
-  );
-};
-
-// Example of how to use the Provider in your App
-function App() {
-  return (
-    <ThemeProvider>
-      <div>
-        <h1>Simple Theme Example</h1>
-        <MyThemedComponent />
-        <ThemeToggleButton />
+    <>
+      <div
+        style={{
+          "background-color": currentTheme["background-color"],
+          color: currentTheme.color,
+          padding: "20px",
+        }}
+      >
+        Hello World !
       </div>
-    </ThemeProvider>
+      <button type="button" onClick={toggleTheme}>
+        Switch to {theme === "light" ? "dark" : "light"}
+      </button>
+    </>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <ThemeProvider>
+      <ChildComponent />
+    </ThemeProvider>
+  );
+}
 ```
 
 ## useReducer and useState
