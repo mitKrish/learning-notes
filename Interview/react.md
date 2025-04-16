@@ -23,6 +23,9 @@
 - Pass data bw components
 - Axios
 - Lazy Loading
+- create file uploader.
+- JSX print 5 boxes
+- 
 
 
 **Core React Concepts:**
