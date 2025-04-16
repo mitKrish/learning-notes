@@ -161,3 +161,78 @@ function App() {
 export default App;
 ```
 
+## useReducer and useState
+```javascript
+import React, { useState, useReducer } from 'react';
+
+// Example 1: useState
+const UseStateCounter = () => {
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(count + 1);
+  };
+
+  const decrement = () => {
+    setCount(count - 1);
+  };
+
+  return (
+    <div>
+      <h2>useState Counter</h2>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <hr />
+    </div>
+  );
+};
+
+// Example 2: useReducer
+// Define the reducer function
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { count: state.count + 1 };
+    case 'DECREMENT':
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+};
+
+// Define the initial state
+const initialState = { count: 0 };
+
+const UseReducerCounter = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const increment = () => {
+    dispatch({ type: 'INCREMENT' });
+  };
+
+  const decrement = () => {
+    dispatch({ type: 'DECREMENT' });
+  };
+
+  return (
+    <div>
+      <h2>useReducer Counter</h2>
+      <p>Count: {state.count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+    <div>
+      <UseStateCounter />
+      <UseReducerCounter />
+    </div>
+  );
+};
+
+export default App;
+```
