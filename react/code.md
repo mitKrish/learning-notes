@@ -228,3 +228,51 @@ function UserInfo() {
 
 export default UserInfo;
 ```
+
+## useEffect
+
+```javascript
+import { useEffect, useState } from "react";
+
+function UserProfile({ userId }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/users/${userId}`
+        );
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getUserData();
+  }, [userId]);
+
+  if (loading) return <p>Loading User Data</p>;
+  if (error) return <p>Error getting user data</p>;
+  if (!user) return <p>No user data found.</p>;
+
+  return (
+    <>
+      <p>User Data</p>
+      <p>Name:{user.name}</p>
+      <p>Email:{user.email}</p>
+    </>
+  );
+}
+
+export default function App() {
+  return <UserProfile userId={1} />;
+}
+```
