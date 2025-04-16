@@ -236,3 +236,46 @@ const App = () => {
 
 export default App;
 ```
+
+## useEffect
+```javascript
+import React, { useState, useEffect } from 'react';
+
+function UserInfo() {
+  const [userData, setUserData] = useState(null);
+  const apiUrl = 'https://jsonplaceholder.typicode.com/users/1'; // Simple public API for a user
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        // You might want to set an error state here to display an error message
+      }
+    };
+
+    fetchUserData();
+  }, [apiUrl]); // Effect runs once after initial render because dependency array is fixed
+
+  if (!userData) {
+    return <div>Loading user information...</div>;
+  }
+
+  return (
+    <div>
+      <h2>User Information</h2>
+      <p>User ID: {userData.id}</p>
+      <p>Name: {userData.name}</p>
+      {/* You can display other user details here if needed */}
+    </div>
+  );
+}
+
+export default UserInfo;
+```
