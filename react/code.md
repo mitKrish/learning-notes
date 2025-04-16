@@ -44,8 +44,8 @@ export default function App() {
 
   return (
     <>
-      <p>{msg}</p>
-      <Child props={msg} onUpdate={handleMsgUpdate} />
+      <p>Parent Component: {msg}</p>
+      <Child msg={msg} onUpdate={handleMsgUpdate} />
     </>
   );
 }
@@ -53,6 +53,7 @@ export default function App() {
 function Child(props) {
   const [childMsg, setChildMsg] = useState(props.msg);
 
+  console.log("props", props, props.msg);
   function handleChildMsgUpdate(event) {
     setChildMsg(event.target.value);
   }
@@ -76,3 +77,6 @@ function Child(props) {
   );
 }
 ```
+
+![image](https://github.com/user-attachments/assets/59f1e66c-e20b-4dfb-9e79-d5a6d1e25533)
+
