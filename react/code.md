@@ -276,3 +276,24 @@ export default function App() {
   return <UserProfile userId={1} />;
 }
 ```
+
+## useEffect (Simple counter in title)
+```javascript
+import { useEffect, useState } from "react";
+
+export default function App() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    document.title = `count:${count}`;
+  }, [count]);
+
+  return (
+    <div>
+      <p>count:{count}</p>
+      <button type="button" onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </div>
+  );
+}
+```
