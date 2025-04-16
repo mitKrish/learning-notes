@@ -1,3 +1,5 @@
+## useRef and useState
+
 ```javascript
 import { useRef } from "react";
 import { useState } from "react";
@@ -24,6 +26,53 @@ export default function App() {
         State: Clicked {count} times
       </button>
     </>
+  );
+}
+```
+
+## Passing data between Parent and Child components
+
+```javascript
+import { useState } from "react";
+
+export default function App() {
+  const [msg, setMsg] = useState("");
+
+  function handleMsgUpdate(newMsg) {
+    setMsg(newMsg);
+  }
+
+  return (
+    <>
+      <p>{msg}</p>
+      <Child props={msg} onUpdate={handleMsgUpdate} />
+    </>
+  );
+}
+
+function Child(props) {
+  const [childMsg, setChildMsg] = useState(props.msg);
+
+  function handleChildMsgUpdate(event) {
+    setChildMsg(event.target.value);
+  }
+
+  function handleClick() {
+    props.onUpdate(childMsg);
+  }
+
+  return (
+    <div>
+      <p>Message from Parent: {props.msg}</p>
+      <input
+        type="text"
+        value={childMsg}
+        onChange={handleChildMsgUpdate}
+      ></input>
+      <button type="button" onClick={handleClick}>
+        Update
+      </button>
+    </div>
   );
 }
 ```
