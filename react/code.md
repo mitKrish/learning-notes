@@ -80,3 +80,84 @@ function Child(props) {
 
 ![image](https://github.com/user-attachments/assets/59f1e66c-e20b-4dfb-9e79-d5a6d1e25533)
 
+
+## Context
+
+```javascript
+import React, { createContext, useState, useContext } from 'react';
+
+// 1. Create the Context
+const ThemeContext = createContext();
+
+// 2. Create the Theme Provider Component
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light'); // Initial theme is light
+
+  // Define the theme styles
+  const themes = {
+    light: {
+      backgroundColor: 'white',
+      color: 'black',
+    },
+    dark: {
+      backgroundColor: 'black',
+      color: 'white',
+    },
+  };
+
+  // Function to toggle the theme
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, themes, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+// 3. Create a Custom Hook to Use the Context
+export const useTheme = () => {
+  return useContext(ThemeContext);
+};
+
+// Example Usage in a Component
+const MyThemedComponent = () => {
+  const { theme, themes } = useTheme();
+  const currentTheme = themes[theme];
+
+  return (
+    <div style={{ backgroundColor: currentTheme.backgroundColor, color: currentTheme.color, padding: '20px' }}>
+      This text is themed!
+    </div>
+  );
+};
+
+// Example Usage of the Toggle Button
+const ThemeToggleButton = () => {
+  const { toggleTheme, theme } = useTheme();
+
+  return (
+    <button onClick={toggleTheme}>
+      Switch to {theme === 'light' ? 'Dark' : 'Light'} Theme
+    </button>
+  );
+};
+
+// Example of how to use the Provider in your App
+function App() {
+  return (
+    <ThemeProvider>
+      <div>
+        <h1>Simple Theme Example</h1>
+        <MyThemedComponent />
+        <ThemeToggleButton />
+      </div>
+    </ThemeProvider>
+  );
+}
+
+export default App;
+```
+
