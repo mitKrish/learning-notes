@@ -21,3 +21,16 @@
     - higher order functions
     - IIFE
 - currying
+- prototype inheritance
+- prototype create map function
+- memory leaks
+- flat array with spread operator
+- primitive & non primitive data types
+- global objects
+- parallel multiple promise call without promise.allsettled
+- polyfills
+- typeof of parameters in function
+- functional programming
+- object programming
+- prototype inheritance vs class inheritance
+- 
