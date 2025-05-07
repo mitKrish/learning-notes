@@ -7,3 +7,4 @@
 - Optimize performance
 - GridFs
 - Capped Collection
+- metalis view in oracle db for performance 
