@@ -32,6 +32,9 @@
 - Enhancing lazy loading, optimization methods, and code efficiency.
 - Grasping security measures for banking applications.
 - Practicing integration with CMS (Sitecore) to render components.
+- Event bubbling, Event propagation 
+- Custom hooks(with code)
+- How web page is loaded initially on the browser
 
 
 **Core React Concepts:**
