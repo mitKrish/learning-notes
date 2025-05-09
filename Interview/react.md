@@ -36,6 +36,31 @@
 - Custom hooks(with code)
 - How web page is loaded initially on the browser
 
+1. Difference between monolithic and microfrontend applications?
+2. Advantages of microfrontend applications?
+3. Some approaches to follow on building microfrontend?
+4. How to access microfrontend in other using webpack?
+5. Ways to share data between microfrontend
+6. Issues faced in microfrontend applications
+7. Virtual dom in react?
+8. Shallow comparison in react
+9. Difference between usestate and usereducer
+10. React18 features
+11. Performance optimisation techniques used in react applications
+12. Redux concepts
+13. Importance of Middlewares in redux
+14. Closures
+15. Map and foreach difference
+16. Hoisting in js
+17. Temporal dead zone
+18. Slice and splice difference
+19. o/p based question in array of objects
+20. To find the second largest number in given array.
+System test  
+Given--> Array of objects
+Expectation--> to list child values under each parent values along with checkbox in front of each values.
+On clicking parent checkbox all corresponding child values listed under the parent  to be automatically checked and vice versa.
+
 
 **Core React Concepts:**
 
