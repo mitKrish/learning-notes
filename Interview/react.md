@@ -25,7 +25,13 @@
 - Lazy Loading
 - create file uploader.
 - JSX print 5 boxes
-- 
+
+
+- Enhancing automation testing with Playwright.
+- Exploring Micro-frontend architecture in detail.
+- Enhancing lazy loading, optimization methods, and code efficiency.
+- Grasping security measures for banking applications.
+- Practicing integration with CMS (Sitecore) to render components.
 
 
 **Core React Concepts:**
